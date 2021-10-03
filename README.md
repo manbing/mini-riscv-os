@@ -10,6 +10,8 @@ Prerequisites
 
 Steps
 -----
+* `00-HelloWorld`
+  - Print trivial greetings
 
 Building and Verification
 -------------------------
