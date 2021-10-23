@@ -16,9 +16,22 @@ static inline uint32_t r_mstatus(void)
         return value;
 }
 
+static inline uint32_t r_sstatus(void)
+{
+        uint32_t value = 0;
+
+        asm volatile("csrr %0, sstatus" : "=r"(value));
+        return value;
+}
+
 static inline void w_mstatus(uint32_t value)
 {
         asm volatile("csrw mstatus, %0" : : "r" (value));
+}
+
+static inline void w_sstatus(uint32_t value)
+{
+        asm volatile("csrw sstatus, %0" : : "r" (value));
 }
 
 static inline uint32_t r_mie(void)
@@ -29,9 +42,22 @@ static inline uint32_t r_mie(void)
         return value;
 }
 
+static inline uint32_t r_sie(void)
+{
+        uint32_t value = 0;
+
+        asm volatile("csrr %0, sie" : "=r"(value));
+        return value;
+}
+
 static inline void w_mie(uint32_t value)
 {
         asm volatile("csrw mie, %0" : : "r" (value));
+}
+
+static inline void w_sie(uint32_t value)
+{
+        asm volatile("csrw sie, %0" : : "r" (value));
 }
 
 void print_str(const char *str)

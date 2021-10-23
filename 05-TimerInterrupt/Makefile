@@ -8,7 +8,7 @@ CFLAGS = -fno-common -ffreestanding -O0 \
 TARGET = hello.bin
 all: $(TARGET)
 
-$(TARGET): hello.c startup.S trap.c context_switch.S riscv.c
+$(TARGET): hello.c startup.S trap.c asm_reg.S riscv.c
 	$(CC) $(CFLAGS) $^ -o hello.elf
 	$(CROSS_COMPILE)objcopy -Obinary hello.elf hello.bin
 	$(CROSS_COMPILE)objdump -S hello.elf > hello.list

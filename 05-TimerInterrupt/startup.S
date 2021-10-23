@@ -1,4 +1,4 @@
-#include "context_switch.S"
+#include "asm_reg.S"
 
 .section    .text.crt0,"ax",@progbits
 .global _start
@@ -8,12 +8,28 @@ _start:
 	.cfi_startproc
         .cfi_undefined ra
 
+        // stack pointer
+	lui sp, 0x80001
+
         // tvec
         la t0, isr_vectors
         csrw mtvec, t0
+
+        // epc
+        la t1, main
+        csrw mepc, t1
        
-	lui sp, 0x80001
-	jal main
+        // status
+        csrr t4, mstatus
+        li t1, 1 // supervisor mode
+        slli t2, t1, 11
+        or t4, t4, t2
+        csrw mstatus, t4
+
+	/* SysTick configuration */
+        jal systick_init
+
+	mret
 
         .cfi_endproc
 
@@ -26,7 +42,9 @@ finish:
 .align 4
 isr_vectors:
 	.cfi_startproc
-        push_frame
+        mv t6, sp
+        push_ctx t6
+        csrw   mscratch, t6
 
         csrr a0, mcause
         csrr t1, mepc
@@ -41,7 +59,8 @@ isr_vectors:
 2: // exception
 	jal sync_handletr
 3:
-        pop_frame
+	csrr t6, mscratch
+        pop_ctx t6
         mret
         .cfi_endproc
         .end
