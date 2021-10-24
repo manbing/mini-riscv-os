@@ -81,23 +81,39 @@ ecall_handler:
         /* save user state */
         push_frame sp
 
-        // status
-        csrr t0, sstatus
-        sw t0, STACK_OFFSET_STATUS(sp)
-
         // epc
         csrr t0, mepc
         addi t0, t0, 4 // TODO: get following command of ecall.
         sw t0, STACK_OFFSET_EPC(sp)
 
+        // status
+        csrr t0, sstatus
+        sw t0, STACK_OFFSET_STATUS(sp)
+
         /* load kernel state */
 
         // get kernel stack
         csrrw sp, sscratch, sp
-        
+
+        // epc
+	lw t1, STACK_OFFSET_EPC(sp)
+        csrw mepc, t1
+
+        // status
+        csrr t4, mstatus
+        li t1, 1 // supervisor mode
+        slli t2, t1, 11 //MSTATUS_MPP
+        or t4, t4, t2
+
+        li t1, 1
+        slli t2, t1, 7 //MSTATUS_MPIE
+        not t3, t2
+        and t4, t4, t3
+        csrw mstatus, t4
+
         pop_frame sp
         csrr a0, sscratch
-        ret
+        mret
         
         .cfi_endproc
 
@@ -114,6 +130,10 @@ activate:
         // epc
         sw ra, STACK_OFFSET_EPC(sp)
 
+        // status
+        csrr t0, sstatus
+        sw t0, STACK_OFFSET_STATUS(sp)
+
         // save kernel stack
         csrrw sp, sscratch, sp
 
@@ -123,11 +143,11 @@ activate:
         // status
         lw t0, STACK_OFFSET_STATUS(sp)
         csrw sstatus, t0
-        
+
         // epc
 	lw t1, STACK_OFFSET_EPC(sp)
         csrw sepc, t1
-        
+
         pop_frame sp
         sret
 
