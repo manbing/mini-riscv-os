@@ -50,9 +50,6 @@ int main(void)
 
 	print_str("\nOS: Start round-robin scheduler!\n");
 
-	/* SysTick configuration */
-        systick_init();
-
 	while (1) {
 		print_str("OS: Activate next task\n");
 		usertasks[current_task] = activate(usertasks[current_task]);

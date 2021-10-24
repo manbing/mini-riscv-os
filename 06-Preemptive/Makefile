@@ -8,7 +8,7 @@ CFLAGS = -fno-common -ffreestanding -O0 \
 TARGET = os.bin
 all: $(TARGET)
 
-$(TARGET): os.c startup.S context_switch.S syscall.S entry.S riscv.c asm_reg.S exception.S interrupt.S
+$(TARGET): os.c startup.S context_switch.S syscall.S riscv.c asm_reg.S exception.S interrupt.S
 	$(CC) $(CFLAGS) $^ -o os.elf
 	$(CROSS_COMPILE)objcopy -Obinary os.elf os.bin
 	$(CROSS_COMPILE)objdump -S os.elf > os.list
