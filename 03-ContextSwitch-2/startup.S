@@ -52,7 +52,7 @@ ENTRY(int_vect_table)
         .word 0
         .word 0
         .word 0
-END(excep_vect_table)
+END(int_vect_table)
 
 ENTRY(excep_vect_table)
         .word 0
