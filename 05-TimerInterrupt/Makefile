@@ -14,7 +14,7 @@ $(TARGET): hello.c startup.S trap.c asm_reg.S riscv.c
 	$(CROSS_COMPILE)objdump -S hello.elf > hello.list
 
 qemu: $(TARGET)
-	@qemu-system-riscv32 -M ? | grep opentitan >/dev/null || exit
+	@qemu-system-riscv32 -M ? | grep virt >/dev/null || exit
 	@echo "Press Ctrl-A and then X to exit QEMU"
 	@echo
 	qemu-system-riscv32 -machine virt -m 128M -bios none -kernel hello.bin -nographic

@@ -14,7 +14,7 @@ $(TARGET): os.c startup.S context_switch.S syscall.S riscv.c asm_reg.S exception
 	$(CROSS_COMPILE)objdump -S os.elf > os.list
 
 qemu: $(TARGET)
-	@qemu-system-riscv32 -M ? | grep opentitan >/dev/null || exit
+	@qemu-system-riscv32 -M ? | grep virt  >/dev/null || exit
 	@echo "Press Ctrl-A and then X to exit QEMU"
 	@echo
 	qemu-system-riscv32 -machine virt -m 128M -bios none -kernel os.bin -nographic
