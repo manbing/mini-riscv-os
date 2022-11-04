@@ -1,4 +1,4 @@
-CROSS_COMPILE ?= riscv32-unknown-elf-
+CROSS_COMPILE ?= riscv64-unknown-elf-
 CC := $(CROSS_COMPILE)gcc
 CFLAGS = -fno-common -ffreestanding -O0 \
 	 -gdwarf-2 -g3 -Wall -Werror \
