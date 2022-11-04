@@ -27,6 +27,11 @@ _start:
         slli t2, t1, 11
         or t4, t4, t2
         csrw mstatus, t4
+	
+	li t0, 0x1f
+	csrw    pmpcfg0, t0
+	li t0, -1
+	csrw    pmpaddr0, t0
 
         // supervisor stack pointer
 	lui sp, 0x8000a

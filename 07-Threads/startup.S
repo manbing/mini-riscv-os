@@ -30,6 +30,11 @@ _start:
 
 	/* SysTick configuration */
         jal systick_init
+	
+	li t0, 0x1f
+	csrw    pmpcfg0, t0
+	li t0, -1
+	csrw    pmpaddr0, t0
 
         // supervisor stack pointer
 	lui sp, 0x8000a

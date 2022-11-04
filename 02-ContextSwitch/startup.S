@@ -26,7 +26,12 @@ _start:
         and t4, t4, t3
         csrw mstatus, t4
 
-        mret
+	li t0, 0x1f
+	csrw    pmpcfg0, t0
+	li t0, -1
+	csrw    pmpaddr0, t0
+        
+	mret
         
         .cfi_endproc
 
