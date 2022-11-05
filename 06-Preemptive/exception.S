@@ -1,5 +1,5 @@
 #include "linkage.h"
-#include "asm_reg.S"
+#include "context_switch.S"
 
 ENTRY(do_trap_ecall_u)
         // get kernel stack
@@ -21,7 +21,7 @@ ENTRY(do_trap_ecall_u)
         and t4, t4, t3
         csrw mstatus, t4
 
-        pop_ctx t6
+        register_restore t6
         csrr a0, mscratch
         mret
 ENDPROC(do_trap_ecall_u)

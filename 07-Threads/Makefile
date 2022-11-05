@@ -8,7 +8,7 @@ CFLAGS = -fno-common -ffreestanding -O0 \
 TARGET = os.bin
 all: $(TARGET)
 
-$(TARGET): os.c startup.S malloc.c threads.c riscv.c
+$(TARGET): os.c startup.S malloc.c threads.c riscv.c context_switch.S entry.S
 	$(CC) $(CFLAGS) $^ -o os.elf
 	$(CROSS_COMPILE)objcopy -Obinary os.elf os.bin
 	$(CROSS_COMPILE)objdump -S os.elf > os.list

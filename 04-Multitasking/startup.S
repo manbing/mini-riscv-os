@@ -41,15 +41,4 @@ _start:
 finish:
 	beq t1, t1, finish
 
-.section .text.metal.init.trapvec
-.global isr_vectors
-.type isr_vectors, @function
-.align 4
-isr_vectors:
-	.cfi_startproc
-        csrr t0, mcause
-        csrr t1, mepc
-        csrr t2, mtval
-        j ecall_handler
-        .cfi_endproc
         .end

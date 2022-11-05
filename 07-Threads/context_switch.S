@@ -1,6 +1,6 @@
 #include "asm_reg.h"
 
-.macro push_ctx frame
+.macro register_save frame
         addi \frame, \frame, -140 // 35 * 4
 
         sw x1, STACK_OFFSET_RA(\frame)
@@ -35,7 +35,7 @@
         sw x31, STACK_OFFSET_T6(\frame)
 .endm
 
-.macro pop_ctx frame
+.macro register_restore frame
         lw x1, STACK_OFFSET_RA(\frame)
         lw x2, STACK_OFFSET_SP(\frame)
         lw x3, STACK_OFFSET_GP(\frame)
@@ -67,6 +67,44 @@
         lw x29, STACK_OFFSET_T4(\frame)
         lw x30, STACK_OFFSET_T5(\frame)
         lw x31, STACK_OFFSET_T6(\frame)
+
+        addi \frame, \frame, 140 // 35 * 4
+.endm
+
+.macro thread_save frame
+        addi \frame, \frame, -140 // 35 * 4
+
+        sw x1, STACK_OFFSET_RA(\frame)
+        sw x2, STACK_OFFSET_SP(\frame)
+        sw x8, STACK_OFFSET_S0(\frame)
+        sw x9, STACK_OFFSET_S1(\frame)
+        sw x18, STACK_OFFSET_S2(\frame)
+        sw x19, STACK_OFFSET_S3(\frame)
+        sw x20, STACK_OFFSET_S4(\frame)
+        sw x21, STACK_OFFSET_S5(\frame)
+        sw x22, STACK_OFFSET_S6(\frame)
+        sw x23, STACK_OFFSET_S7(\frame)
+        sw x24, STACK_OFFSET_S8(\frame)
+        sw x25, STACK_OFFSET_S9(\frame)
+        sw x26, STACK_OFFSET_S10(\frame)
+        sw x27, STACK_OFFSET_S11(\frame)
+.endm
+
+.macro thread_restore frame
+        lw x1, STACK_OFFSET_RA(\frame)
+        lw x8, STACK_OFFSET_S0(\frame)
+        lw x9, STACK_OFFSET_S1(\frame)
+        lw x18, STACK_OFFSET_S2(\frame)
+        lw x19, STACK_OFFSET_S3(\frame)
+        lw x20, STACK_OFFSET_S4(\frame)
+        lw x21, STACK_OFFSET_S5(\frame)
+        lw x22, STACK_OFFSET_S6(\frame)
+        lw x23, STACK_OFFSET_S7(\frame)
+        lw x24, STACK_OFFSET_S8(\frame)
+        lw x25, STACK_OFFSET_S9(\frame)
+        lw x26, STACK_OFFSET_S10(\frame)
+        lw x27, STACK_OFFSET_S11(\frame)
+        lw x2, STACK_OFFSET_SP(\frame)
 
         addi \frame, \frame, 140 // 35 * 4
 .endm
