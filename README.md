@@ -16,9 +16,6 @@ Prerequisites
 Steps
 -----
 * `00-HelloWorld`
-  - Print trivial greetings
-
-* `00-HelloWorld`
 
 * `02-ContextSwitch`
 
