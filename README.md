@@ -29,6 +29,8 @@ Steps
 
 * `07-Threads`
 
+* `08-Preemptive-2`
+
 Building and Verification
 -------------------------
 * Changes the current working directory to specificed one and issue
